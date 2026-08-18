@@ -1,0 +1,1683 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<!-- ARCHIVNI KOPIE (v05) landing page nograys.cz/tonikum-pro-zeny/ — jedine upravy proti live stavu: cesta k fontu + noindex. -->
+<meta name="robots" content="noindex, nofollow">
+<!-- Nogray's LP pro zeny · verze v05 · archiv verzi: https://ionfet.github.io/nograys-landing-zeny/archiv/ -->
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nogray's® – Vraťte vlasům přirozenou barvu. Bez barvení.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300..700;1,9..40,300..700&display=swap" rel="stylesheet">
+<style>
+  @font-face {
+    font-family: 'TabacGlam';
+    src: url('https://nograys.cz/wp-content/themes/nograys/assets/fonts/TabacGlamG1-Regular.woff2') format('woff2'), url('../../TabacGlamG1-Regular.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  /* ─── RESET ─── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg:          #f9f5ea;
+    --bg-tint:     #f4eedb;
+    --ink:         #0e0e0e;
+    --ink-90:      rgba(14,14,14,.9);
+    --ink-72:      rgba(14,14,14,.72);
+    --ink-58:      rgba(14,14,14,.66);
+    --line:        rgba(14,14,14,.16);
+    --line-soft:   rgba(14,14,14,.1);
+    --cream:       #f9f5ea;
+    --cream-80:    rgba(249,245,234,.82);
+    --cream-60:    rgba(249,245,234,.62);
+    --cream-line:  rgba(249,245,234,.14);
+
+    --pad-x:       clamp(20px, 5vw, 88px);
+    --rail:        clamp(16px, 4vw, 40px);
+    --block-y:     clamp(78px, 9vw, 140px);
+
+    --z-sticky:    100;
+    --z-modal:     1000;
+
+    --ease:        cubic-bezier(.22,1,.36,1);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    font-size: 112.5%; /* 18px base: čitelnost pro cílovku 40+ */
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 400;
+    font-size: 1rem;
+    color: var(--ink);
+    background: var(--bg);
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    text-wrap: pretty;
+    line-height: 1.6;
+  }
+
+  h1, h2, h3 {
+    font-family: 'TabacGlam', Georgia, serif;
+    font-weight: 400;
+    line-height: 1.04;
+    letter-spacing: -.015em;
+    text-wrap: balance;
+  }
+
+  em { font-style: italic; }
+
+  img { max-width: 100%; display: block; }
+
+  a { color: inherit; }
+
+  /* ─── RUNNING LABEL (vertical index rail) ─── */
+  .index {
+    font-family: 'DM Sans', sans-serif;
+    font-size: .78rem;
+    font-weight: 600;
+    letter-spacing: .22em;
+    text-transform: uppercase;
+    color: var(--ink-58);
+  }
+
+  /* ─── BUTTONS ─── */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    min-height: 52px;
+    padding: 15px 34px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+    font-size: .82rem;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: 2px;
+    transition: background .25s var(--ease), color .25s var(--ease), transform .2s var(--ease);
+  }
+  .btn-ink   { background: var(--ink); color: var(--cream); }
+  .btn-ink:hover   { background: #000; transform: translateY(-2px); }
+  .btn-cream { background: var(--cream); color: var(--ink); }
+  .btn-cream:hover { transform: translateY(-2px); }
+  .btn-outline {
+    background: transparent;
+    color: var(--ink);
+    border: 1px solid var(--ink);
+  }
+  .btn-outline:hover { background: var(--ink); color: var(--cream); transform: translateY(-2px); }
+  .btn-arrow { transition: transform .25s var(--ease); }
+  .btn:hover .btn-arrow { transform: translateX(4px); }
+
+  .link-quiet {
+    font-size: .92rem;
+    text-decoration: none;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 3px;
+    transition: border-color .2s, color .2s;
+    color: var(--ink-72);
+  }
+  .link-quiet:hover { color: var(--ink); border-color: var(--ink); }
+
+  /* ─── GOOGLE BADGE ─── */
+  .gbadge {
+    display: inline-flex; align-items: center; gap: 8px;
+    text-decoration: none;
+    padding: 9px 16px 9px 12px;
+    border: 1px solid var(--line);
+    border-radius: 40px;
+    background: var(--bg);
+    transition: border-color .2s;
+  }
+  .gbadge:hover { border-color: rgba(14,14,14,.35); }
+  .gbadge svg { width: 18px; height: 18px; flex-shrink: 0; }
+  .gbadge .rate { font-size: .85rem; font-weight: 600; letter-spacing: -.01em; }
+  .gbadge .stars { color: #c98a16; font-size: .82rem; letter-spacing: 1px; line-height: 1; }
+  .gbadge .count { font-size: .8rem; color: var(--ink-72); }
+  .gbadge.on-dark { background: rgba(249,245,234,.05); border-color: var(--cream-line); }
+  .gbadge.on-dark:hover { border-color: rgba(249,245,234,.3); }
+  .gbadge.on-dark .rate { color: var(--cream); }
+  .gbadge.on-dark .stars { color: #e0b24c; }
+  .gbadge.on-dark .count { color: var(--cream-80); }
+  .review-note { font-size: .9rem; color: var(--ink-58); line-height: 1.6; margin-top: 12px; max-width: 38ch; }
+  .review-note.on-dark { color: var(--cream-60); }
+
+  /* ─── NAV ─── */
+  .nav {
+    position: sticky; top: 0; z-index: var(--z-sticky);
+    background: rgba(249,245,234,.86);
+    backdrop-filter: saturate(140%) blur(10px);
+    -webkit-backdrop-filter: saturate(140%) blur(10px);
+    border-bottom: 1px solid var(--line-soft);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 14px var(--pad-x);
+  }
+  .nav img { height: 40px; width: auto; }
+  .nav-right {
+    display: flex; align-items: center; gap: 22px;
+    opacity: 0; visibility: hidden; transform: translateY(-8px);
+    transition: opacity .32s ease, transform .32s ease, visibility .32s;
+  }
+  .nav.is-past-hero .nav-right { opacity: 1; visibility: visible; transform: none; }
+  @media (prefers-reduced-motion: reduce) {
+    .nav-right, .nav.is-past-hero .nav-right { transition: none; transform: none; }
+  }
+  .nav-meta { font-size: .8rem; color: var(--ink-72); }
+  .nav .btn { min-height: 44px; padding: 11px 24px; font-size: .78rem; }
+  @media (max-width: 600px) { .nav img { height: 27px; } .nav-right { gap: 12px; } .nav .btn { padding: 10px 15px; font-size: .78rem; white-space: nowrap; } }
+
+  /* ─── HERO : asymmetric sticky split ─── */
+  .hero {
+    display: grid;
+    grid-template-columns: 1.05fr .95fr;
+    /* nav (~73px) + hero + ribbon (~51px) = 100svh → ribbon vidět nad ohybem; min-height = na nízkých laptopech obsah neořízne */
+    min-height: calc(100svh - 124px);
+    border-bottom: 1px solid var(--line-soft);
+  }
+  .hero-copy {
+    padding: clamp(32px, 4vw, 56px) var(--pad-x) clamp(24px, 3vw, 40px);
+    display: flex; flex-direction: column; justify-content: flex-start;
+    border-right: 1px solid var(--line-soft);
+  }
+  .hero-kicker {
+    display: flex; align-items: baseline; gap: 16px;
+    margin-bottom: clamp(14px, 1.6vw, 22px);
+  }
+  .hero-kicker .num {
+    font-family: 'TabacGlam', serif; font-size: 1.05rem; color: var(--ink-58);
+  }
+  .hero h1 {
+    font-size: clamp(2.5rem, 5.2vw, 4.4rem);
+    line-height: 1.06;
+    margin-bottom: clamp(14px, 1.6vw, 22px);
+  }
+  .hero h1 .soft { color: var(--ink-58); font-style: italic; }
+  .hero-sub {
+    font-size: 1.02rem;
+    color: var(--ink-72);
+    line-height: 1.62;
+    max-width: 46ch;
+    margin-bottom: clamp(16px, 2vw, 26px);
+  }
+  .hero-actions { display: flex; align-items: center; gap: 26px; flex-wrap: wrap; }
+
+  .hero-visual {
+    position: relative;
+    background: var(--ink);
+    overflow: hidden;
+  }
+  .hero-visual .sticky-img {
+    position: sticky; top: 0;
+    height: 100%;
+    min-height: 100%;
+  }
+  .hero-visual img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    object-position: center 22%;
+  }
+  .hero-tag {
+    position: absolute; left: 24px; bottom: 24px; z-index: 2;
+    background: rgba(14,14,14,.62);
+    backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+    color: var(--cream);
+    font-size: .78rem; letter-spacing: .06em;
+    padding: 9px 16px; border-radius: 2px;
+    max-width: 30ch; line-height: 1.5;
+  }
+
+  /* ── Badge garance (hero): výrazné vypíchnutí 14denní garance nad nadpisem ── */
+  .hero-trust {
+    display: flex; align-items: center; flex-wrap: wrap;
+    gap: 10px 12px;
+    margin: clamp(6px, 1vw, 12px) 0 clamp(24px, 4.5vw, 56px);
+  }
+  .hero-trust .gbadge { background: #fff; }
+  .hero-ship {
+    display: inline-flex; align-items: center; gap: 7px;
+    align-self: flex-start;
+    margin-top: clamp(12px, 1.5vw, 16px);
+    font-size: .82rem; font-weight: 500; color: var(--ink-72);
+  }
+  .hero-ship svg { width: 18px; height: 18px; color: var(--ink-58); flex: none; }
+  .hero-guarantee {
+    display: inline-flex; align-items: center; gap: 8px;
+    margin: 0;
+    padding: 9px 16px 9px 12px;
+    background: #fff;
+    color: var(--ink);
+    border: 1px solid var(--line);
+    border-radius: 40px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: .85rem;
+    font-weight: 500;
+  }
+  .hero-guarantee svg { width: 18px; height: 18px; color: #c98a16; flex: none; }
+  .hero-guarantee .hg-days { color: var(--ink); font-weight: 700; }
+  @media (max-width: 600px) {
+    .hero-actions { flex-direction: column; align-items: flex-start; gap: 14px; }
+    .hero-actions .link-quiet { order: -1; }
+  }
+
+  @media (max-width: 860px) {
+    .hero { grid-template-columns: 1fr; min-height: 0; }
+    .hero-copy { border-right: none; padding-top: clamp(28px,6vw,40px); }
+    .hero-visual { min-height: 52vh; }
+    .hero-visual .sticky-img { position: relative; height: 56vh; }
+  }
+
+  /* ─── MARQUEE TRUST RIBBON (replaces stripe trust bar) ─── */
+  .ribbon {
+    background: var(--ink); color: var(--cream-80);
+    border-bottom: 1px solid var(--cream-line);
+    overflow: hidden; white-space: nowrap;
+  }
+  .ribbon-track {
+    display: inline-flex; align-items: center;
+    padding: 16px 0;
+    animation: scroll-x 38s linear infinite;
+  }
+  .ribbon-track span {
+    display: inline-flex; align-items: center;
+    font-size: .82rem; letter-spacing: .08em;
+    padding: 0 clamp(20px, 3vw, 38px);
+  }
+  .ribbon-track span::after {
+    content: ''; display: inline-block;
+    width: 4px; height: 4px; border-radius: 50%;
+    background: var(--cream-60);
+    margin-left: clamp(40px, 6vw, 76px);
+  }
+  @keyframes scroll-x { to { transform: translateX(-50%); } }
+  .ribbon:hover .ribbon-track { animation-play-state: paused; }
+
+  /* ─── CANVAS / SECTION SCAFFOLD ─── */
+  /* Editorial two-track grid: a narrow running index rail + a wide content column. */
+  .block { padding: var(--block-y) var(--pad-x); }
+  .block.line { border-top: 1px solid var(--line-soft); }
+  .track {
+    display: grid;
+    grid-template-columns: minmax(120px, 200px) minmax(0, 1fr);
+    gap: clamp(28px, 5vw, 72px);
+    max-width: 1240px; margin: 0 auto;
+  }
+  .track-rail { position: relative; }
+  .track-rail .index { display: block; margin-bottom: 14px; }
+  .track-rail .rail-note { font-size: .9rem; color: var(--ink-58); line-height: 1.6; max-width: 24ch; }
+  @media (min-width: 980px) {
+    .track-rail.sticky-rail { position: sticky; top: 96px; align-self: start; }
+  }
+
+  .lede {
+    font-size: clamp(1.9rem, 3.6vw, 3rem);
+    margin-bottom: clamp(24px, 3vw, 40px);
+  }
+  .lede .soft { color: var(--ink-58); font-style: italic; }
+  .body { font-size: 1rem; color: var(--ink-72); line-height: 1.64; max-width: 62ch; }
+
+  @media (max-width: 760px) {
+    .track { grid-template-columns: 1fr; gap: 32px; }
+    .track-rail .rail-note { max-width: none; }
+  }
+
+  /* ─── PROBLEM : two-column rule list + manifesto card ─── */
+  .switch-list { list-style: none; columns: 2; column-gap: clamp(28px, 4vw, 56px); }
+  .switch-list li {
+    break-inside: avoid;
+    padding: 18px 0;
+    border-top: 1px solid var(--line-soft);
+    font-size: .98rem; line-height: 1.6; color: var(--ink-72);
+  }
+  .switch-list li:first-child, .switch-list li:nth-child(4) { border-top: none; }
+  .switch-list li strong { display: block; color: var(--ink); font-weight: 600; margin-bottom: 3px; }
+  @media (max-width: 700px) { .switch-list { columns: 1; } .switch-list li:nth-child(4) { border-top: 1px solid var(--line-soft); } }
+
+  .manifesto {
+    background: var(--ink); color: var(--cream);
+    margin-top: clamp(40px, 5vw, 64px);
+    padding: clamp(40px, 6vw, 72px) clamp(28px, 5vw, 80px);
+    border-radius: 3px;
+    display: grid; grid-template-columns: auto 1fr; gap: clamp(24px, 4vw, 48px);
+    align-items: start;
+  }
+  .manifesto .mark {
+    font-family: 'TabacGlam', serif; font-size: clamp(4rem, 9vw, 7rem);
+    color: var(--cream-60); line-height: .8;
+    margin-top: -.42em;
+  }
+  .manifesto p {
+    font-size: clamp(1.3rem, 2.4vw, 1.8rem);
+    font-style: italic; line-height: 1.4; color: var(--cream);
+    max-width: 30ch;
+  }
+  @media (max-width: 600px) { .manifesto { grid-template-columns: 1fr; gap: 14px; } }
+
+  .block-cta { margin-top: clamp(40px, 5vw, 60px); }
+
+  /* ─── MECHANISM : ledger comparison ─── */
+  .ledger {
+    border-top: 1px solid var(--ink);
+    margin-top: clamp(28px, 3vw, 40px);
+  }
+  .ledger-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(20px, 4vw, 60px);
+    padding: 18px 0;
+    border-bottom: 1px solid var(--line-soft);
+  }
+  .ledger-head {
+    display: grid; grid-template-columns: 1fr 1fr; gap: clamp(20px, 4vw, 60px);
+    padding: 22px 0 14px;
+  }
+  .ledger-head div { font-size: .78rem; letter-spacing: .12em; text-transform: uppercase; }
+  .ledger-head .was { color: var(--ink-58); }
+  .ledger-head .now { color: var(--ink); font-weight: 600; }
+  .ledger-cell { font-size: 1rem; line-height: 1.5; }
+  .ledger-cell.was { color: var(--ink-58); text-decoration: line-through; text-decoration-color: var(--line); }
+  .ledger-cell.now { color: var(--ink-90); font-weight: 500; }
+  .ledger-cell.now::before { content: '→ '; color: var(--ink-58); }
+  @media (max-width: 560px) {
+    .ledger-row, .ledger-head { grid-template-columns: 1fr; gap: 4px; }
+    .ledger-row { padding: 16px 0; }
+    .ledger-cell.was { font-size: .9rem; }
+  }
+
+  .mech-prose h3 {
+    font-family: 'DM Sans', sans-serif; font-weight: 700;
+    font-size: 1.25rem; letter-spacing: -.01em;
+    margin: clamp(40px, 5vw, 56px) 0 16px;
+  }
+  .mech-prose p { font-size: 1rem; color: var(--ink-72); line-height: 1.64; margin-bottom: 14px; max-width: 64ch; }
+  .pills { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 22px; }
+  .pill {
+    border: 1px solid var(--line); color: var(--ink-72);
+    border-radius: 40px; padding: 7px 16px; font-size: .8rem; letter-spacing: .02em;
+  }
+  @media (max-width: 600px) {
+    .mech-prose p { font-size: .94rem; line-height: 1.6; }
+  }
+
+  /* ─── STEPS : editorial numbered run ─── */
+  .steps { display: flex; flex-direction: column; }
+  .step {
+    display: grid;
+    grid-template-columns: minmax(64px, 90px) 1fr;
+    gap: clamp(20px, 4vw, 44px);
+    align-items: start;
+    padding: clamp(24px, 3vw, 34px) 0;
+    border-top: 1px solid var(--cream-line);
+  }
+  .step:first-child { border-top: none; }
+  .step .fig {
+    font-family: 'TabacGlam', serif;
+    font-size: clamp(2.6rem, 5vw, 3.8rem);
+    color: var(--cream-60); line-height: 1;
+  }
+  .step h3 { font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: 1.15rem; color: var(--cream); margin-bottom: 8px; }
+  .step p { font-size: .98rem; color: var(--cream-80); line-height: 1.65; max-width: 56ch; }
+  @media (max-width: 540px) {
+    .step { grid-template-columns: 1fr; gap: 8px; }
+    .step .fig { font-size: 2.4rem; }
+  }
+
+  /* ─── DARK BLOCK base ─── */
+  .block.dark { background: var(--ink); color: var(--cream); }
+  .block.dark .lede { color: var(--cream); }
+  .block.dark .lede .soft { color: var(--cream-60); }
+  .block.dark .index { color: var(--cream-60); }
+  .block.dark .rail-note { color: var(--cream-60); }
+  .block.dark .body { color: var(--cream-80); }
+  .block.dark.line { border-top: 1px solid var(--cream-line); }
+
+  /* ─── TIMELINE : horizontal phase rail ─── */
+  .phases { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(20px, 3vw, 40px); margin-top: clamp(24px, 3vw, 36px); }
+  .phase { padding-top: 22px; border-top: 2px solid var(--line); }
+  .phase:last-child { border-top-color: var(--ink); }
+  .phase .when {
+    display: flex; align-items: baseline; gap: 6px;
+    font-family: 'TabacGlam', serif; margin-bottom: 14px;
+  }
+  .phase .when b { font-size: clamp(2.2rem, 4vw, 3.2rem); font-weight: 400; line-height: 1; }
+  .phase .when span { font-size: .95rem; color: var(--ink-58); }
+  .phase h3 { font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: 1.1rem; margin-bottom: 8px; }
+  .phase p { font-size: .94rem; color: var(--ink-72); line-height: 1.6; }
+  .phase-note { margin-top: clamp(34px, 4vw, 48px); padding-top: 24px; border-top: 1px solid var(--line-soft); font-size: .92rem; color: var(--ink-58); line-height: 1.62; max-width: 72ch; }
+  .phase-note strong { color: var(--ink-72); font-weight: 600; }
+  @media (max-width: 700px) { .phases { grid-template-columns: 1fr; gap: 0; } .phase { padding: 22px 0; } }
+
+  /* ─── TESTIMONIALS : offset editorial stack ─── */
+  .quotes { display: flex; flex-direction: column; gap: clamp(28px, 4vw, 48px); margin-top: clamp(28px, 3vw, 40px); }
+  .quote {
+    display: grid; grid-template-columns: auto 1fr; gap: clamp(20px, 3vw, 38px);
+    align-items: start;
+    padding-bottom: clamp(28px, 4vw, 44px);
+    border-bottom: 1px solid var(--line-soft);
+  }
+  .quote:last-child { border-bottom: none; padding-bottom: 0; }
+  .quote.indent { margin-left: 0; }
+  .quote-aside { width: clamp(120px, 16vw, 180px); }
+  .quote .avatar {
+    width: 52px; height: 52px; border-radius: 50%;
+    border: 1px solid var(--line);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'TabacGlam', serif; font-size: 1.1rem; color: var(--ink-72);
+    margin-bottom: 14px;
+  }
+  .quote .stars { color: #c98a16; font-size: .9rem; letter-spacing: 2px; margin-bottom: 10px; }
+  .quote .name { font-weight: 600; font-size: .95rem; }
+  .quote .meta { font-size: .82rem; color: var(--ink-58); margin-top: 2px; line-height: 1.4; }
+  .quote .tag { display: inline-block; white-space: nowrap; margin-top: 10px; font-size: .78rem; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-58); border: 1px solid var(--line); border-radius: 30px; padding: 4px 10px; }
+  .quote blockquote {
+    font-family: 'TabacGlam', serif;
+    font-size: clamp(1.3rem, 2.4vw, 1.7rem);
+    line-height: 1.36; color: var(--ink-90);
+    max-width: 42ch;
+  }
+  .quote.small blockquote { font-family: 'DM Sans', sans-serif; font-size: 1.06rem; line-height: 1.65; font-weight: 400; max-width: 58ch; }
+  .quote.featured blockquote {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
+    font-size: clamp(1.18rem, 1.8vw, 1.38rem);
+    line-height: 1.45;
+    letter-spacing: -0.005em;
+    color: var(--ink);
+    max-width: 46ch;
+  }
+  .quote.featured .tag { color: var(--cream); background: var(--ink); border-color: var(--ink); }
+  @media (max-width: 760px) {
+    .quote { grid-template-columns: 1fr; gap: 16px; }
+    .quote.indent { margin-left: 0; }
+    .quote-aside {
+      display: grid; width: auto;
+      grid-template-columns: auto 1fr;
+      grid-template-areas: "av name" "av stars" "av meta" "tag tag";
+      column-gap: 14px; row-gap: 3px; align-items: center;
+    }
+    .quote-aside .avatar { grid-area: av; align-self: start; margin-bottom: 0; }
+    .quote-aside .name  { grid-area: name; }
+    .quote-aside .stars { grid-area: stars; margin-bottom: 0; }
+    .quote-aside .meta  { grid-area: meta; }
+    .quote-aside .tag   { grid-area: tag; justify-self: start; margin-top: 10px; }
+  }
+  .quotes-foot { font-size: .92rem; color: var(--ink-58); line-height: 1.62; max-width: 64ch; margin-top: clamp(34px, 4vw, 48px); padding-top: 24px; border-top: 1px solid var(--line-soft); }
+
+  /* ─── BEFORE / AFTER : large overlap on dark ─── */
+  .ba-wrap { margin-top: clamp(28px, 3vw, 40px); }
+  .ba-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: clamp(14px, 2vw, 22px);
+    max-width: 880px;
+  }
+  .ba-fig { position: relative; }
+  .ba-fig img { width: 100%; border-radius: 3px; object-fit: cover; aspect-ratio: 3/4; }
+  .ba-label {
+    position: absolute; left: 14px; bottom: 14px;
+    font-size: .78rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase;
+    padding: 6px 14px; border-radius: 2px;
+  }
+  .ba-label.before { background: rgba(14,14,14,.7); backdrop-filter: blur(6px); color: var(--cream); }
+  .ba-label.after { background: var(--cream); color: var(--ink); }
+  .ba-quote { margin-top: clamp(36px, 4vw, 52px); max-width: 56ch; }
+  .ba-quote blockquote { font-family: 'TabacGlam', serif; font-size: clamp(1.3rem, 2.6vw, 1.9rem); line-height: 1.4; color: var(--cream); margin-bottom: 14px; }
+  .ba-quote .cite { font-size: .82rem; letter-spacing: .06em; color: var(--cream-80); }
+  .ba-fine { font-size: .9rem; color: var(--cream-60); margin-top: 22px; }
+
+  /* ─── MECHANISM 3-FÁZE : enzyme progression (dark) ─── */
+  .mech3-intro { margin-top: clamp(8px, 1.4vw, 16px); }
+  /* obrázkový pás prorazí boční rail a jde na plnou šířku kontejneru (1240) */
+  .mech3-band { max-width: 1240px; margin: clamp(30px, 3.6vw, 46px) auto 0; }
+  .mech3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: clamp(14px, 2.2vw, 26px);
+    margin-top: 0;
+  }
+  .mech3-stage { display: flex; flex-direction: column; margin: 0; }
+  .mech3-media {
+    position: relative;
+    aspect-ratio: 4 / 5;
+    border-radius: 4px;
+    overflow: hidden;
+    background: #17150f;
+  }
+  .mech3-img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .mech3-label {
+    position: absolute; top: 14px; left: 50%; transform: translateX(-50%);
+    max-width: calc(100% - 28px);
+    display: inline-flex; align-items: center; justify-content: center;
+    background: var(--cream); color: var(--ink);
+    font-size: clamp(.78rem, .95vw, .84rem); font-weight: 600;
+    letter-spacing: .06em; text-transform: uppercase; line-height: 1.2;
+    text-align: center; white-space: normal;
+    padding: 7px 18px; border-radius: 22px;
+    box-shadow: 0 6px 18px rgba(0,0,0,.3);
+  }
+  .mech3-flow {
+    display: flex; align-items: center; gap: clamp(12px, 2vw, 20px);
+    margin-top: clamp(22px, 2.8vw, 32px);
+  }
+  .mech3-flow .cap {
+    font-size: .78rem; letter-spacing: .12em; text-transform: uppercase;
+    color: var(--cream-60); white-space: nowrap;
+  }
+  .mech3-flow .line {
+    flex: 1; height: 1px;
+    background: linear-gradient(90deg, rgba(249,245,234,.14), rgba(249,245,234,.5));
+  }
+  .mech3-flow .head { color: var(--cream-80); flex-shrink: 0; display: block; }
+  .mech3-flow .head svg { width: 22px; height: 22px; display: block; }
+  @media (max-width: 760px) {
+    .mech3 { grid-template-columns: 1fr; gap: 6px; }
+    .mech3-media { aspect-ratio: 1 / 1; }
+    .track-rail:empty { display: none; }
+    .mech3-stage:not(:last-child)::after {
+      content: '↓'; display: block; text-align: center;
+      color: var(--cream-60); font-size: 1.5rem; line-height: 1;
+      margin: 14px 0 8px;
+    }
+    .mech3-flow { display: none; }
+  }
+
+  /* ─── STORY : letter card ─── */
+  .letter {
+    max-width: 820px; margin-top: clamp(28px, 3vw, 40px);
+    border: 1px solid var(--line-soft); border-radius: 3px;
+    background: var(--bg-tint);
+    overflow: hidden;
+  }
+  .letter-head { display: flex; align-items: center; gap: 18px; padding: clamp(24px, 3vw, 34px) clamp(24px, 4vw, 44px); border-bottom: 1px solid var(--line-soft); }
+  .letter-avatar {
+    width: 56px; height: 56px; border-radius: 50%;
+    background: var(--ink); color: var(--cream);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'TabacGlam', serif; font-size: 1.2rem; flex-shrink: 0;
+  }
+  .letter-name { font-weight: 600; font-size: 1.05rem; }
+  .letter-meta { font-size: .82rem; color: var(--ink-58); margin-top: 3px; }
+  .letter-stars { margin-left: auto; color: #c98a16; font-size: 1rem; letter-spacing: 2px; }
+  .letter-body { padding: clamp(28px, 4vw, 44px); }
+  .letter-body .intro { font-family: 'TabacGlam', serif; font-size: clamp(1.25rem, 2.2vw, 1.6rem); line-height: 1.42; color: var(--ink-90); margin-bottom: 28px; }
+  .letter-tips { border-top: 1px solid var(--line); padding-top: 26px; }
+  .letter-tips .label { font-size: .78rem; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-58); margin-bottom: 16px; }
+  .letter-tips ol { list-style: none; counter-reset: tip; display: flex; flex-direction: column; gap: 14px; }
+  .letter-tips li { counter-increment: tip; display: grid; grid-template-columns: auto 1fr; gap: 14px; font-size: 1rem; color: var(--ink-72); line-height: 1.55; }
+  .letter-tips li::before { content: counter(tip); font-family: 'TabacGlam', serif; color: var(--ink-58); font-size: 1.05rem; line-height: 1.3; }
+  .letter-fine { margin-top: 24px; font-size: .9rem; color: var(--ink-58); line-height: 1.6; }
+  @media (max-width: 540px) { .letter-stars { margin-left: 0; width: 100%; } .letter-head { flex-wrap: wrap; } }
+
+  /* ─── INGREDIENTS : list + oversized count ─── */
+  .ingredients { display: flex; flex-direction: column; }
+  .ingredient {
+    display: grid; grid-template-columns: minmax(40px, 56px) 1fr; gap: clamp(16px, 3vw, 32px);
+    padding: clamp(20px, 2.6vw, 28px) 0;
+    border-top: 1px solid var(--line-soft);
+  }
+  .ingredient:first-child { border-top: none; padding-top: 0; }
+  .ingredient .ix { font-family: 'TabacGlam', serif; font-size: 1.1rem; color: var(--ink-58); }
+  .ingredient h3 { font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 1.1rem; margin-bottom: 6px; }
+  .ingredient p { font-size: .96rem; color: var(--ink-72); line-height: 1.65; max-width: 60ch; }
+  .inci {
+    margin-top: 28px; padding: 20px 24px;
+    border: 1px solid var(--line-soft); border-radius: 3px; background: var(--bg-tint);
+    font-size: .86rem; color: var(--ink-58); line-height: 1.65;
+  }
+  .inci strong { color: var(--ink-72); font-weight: 600; }
+  .count-panel {
+    border: 1px solid var(--line); border-radius: 3px; padding: clamp(32px, 4vw, 48px);
+    text-align: left;
+  }
+  .count-panel .big { font-family: 'TabacGlam', serif; font-size: clamp(6rem, 14vw, 11rem); line-height: .82; color: var(--ink); display: block; }
+  .count-panel .cap { font-size: .8rem; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-58); margin-top: 6px; }
+  .count-panel hr { border: none; border-top: 1px solid var(--line-soft); margin: 28px 0; }
+  .count-panel p { font-size: .96rem; color: var(--ink-72); line-height: 1.64; }
+  .count-panel .origin { margin-top: 24px; }
+  .count-panel .origin .k { font-size: .78rem; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-58); margin-bottom: 4px; }
+  .count-panel .origin .v { font-weight: 600; font-size: 1.05rem; }
+
+  /* ─── GATE : two ledgers ─── */
+  .gate-cols { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(28px, 4vw, 56px); margin-top: clamp(28px, 3vw, 40px); }
+  .gate-col h3 { font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: 1.15rem; margin-bottom: 8px; }
+  .gate-col.yes h3 { color: var(--cream); }
+  .gate-col.no h3 { color: var(--cream-60); }
+  .gate-col ul { list-style: none; margin-top: 16px; }
+  .gate-col li { padding: 14px 0 14px 30px; border-top: 1px solid var(--cream-line); font-size: .98rem; line-height: 1.5; position: relative; }
+  .gate-col li:first-child { border-top: none; }
+  .gate-col.yes li { color: var(--cream-80); }
+  .gate-col.no li { color: var(--cream-60); }
+  .gate-col li::before { position: absolute; left: 0; top: 14px; font-family: 'TabacGlam', serif; }
+  .gate-col.yes li::before { content: '✓'; color: var(--cream); }
+  .gate-col.no li::before { content: '✕'; color: var(--cream-60); }
+  @media (max-width: 720px) { .gate-cols { grid-template-columns: 1fr; gap: 36px; } }
+
+  /* ─── FAQ : accordion ─── */
+  .faq { margin-top: clamp(24px, 3vw, 36px); border-top: 1px solid var(--line); }
+  .faq-item { border-bottom: 1px solid var(--line-soft); }
+  .faq-q {
+    width: 100%; text-align: left; background: none; border: none; cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    display: flex; justify-content: space-between; align-items: center; gap: 18px;
+    padding: 22px 0; min-height: 44px;
+    font-size: 1.06rem; font-weight: 500; color: var(--ink-90);
+    transition: color .15s;
+  }
+  .faq-q:hover { color: #000; }
+  .faq-icon { flex-shrink: 0; width: 22px; height: 22px; position: relative; }
+  .faq-icon::before, .faq-icon::after { content: ''; position: absolute; background: var(--ink-58); transition: transform .3s var(--ease), opacity .3s; }
+  .faq-icon::before { top: 50%; left: 0; right: 0; height: 1.5px; transform: translateY(-50%); }
+  .faq-icon::after { left: 50%; top: 0; bottom: 0; width: 1.5px; transform: translateX(-50%); }
+  .faq-q[aria-expanded="true"] .faq-icon::after { transform: translateX(-50%) scaleY(0); opacity: 0; }
+  .faq-a {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows .32s var(--ease);
+  }
+  .faq-q[aria-expanded="true"] + .faq-a { grid-template-rows: 1fr; }
+  .faq-a-inner { min-height: 0; overflow: hidden; }
+  .faq-a-copy { padding: 0 0 24px; font-size: 1rem; color: var(--ink-72); line-height: 1.64; max-width: 70ch; }
+
+  /* ─── GUARANTEE ─── */
+  .guarantee { display: grid; grid-template-columns: auto 1fr; gap: clamp(28px, 5vw, 64px); align-items: center; margin-top: clamp(20px, 3vw, 32px); }
+  .seal {
+    width: clamp(120px, 16vw, 168px); height: clamp(120px, 16vw, 168px);
+    border-radius: 50%; border: 1px solid var(--ink);
+    display: flex; flex-direction: column; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .seal b { font-family: 'TabacGlam', serif; font-size: clamp(2.4rem, 4vw, 3.4rem); line-height: 1; }
+  .seal span { font-size: .78rem; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-58); margin-top: 4px; }
+  .guarantee-text h2 { font-size: clamp(1.8rem, 3.2vw, 2.6rem); margin-bottom: 16px; }
+  .guarantee-text p { font-size: 1rem; color: var(--ink-72); line-height: 1.64; margin-bottom: 12px; max-width: 60ch; }
+  .guarantee-text .fine { font-size: .9rem; color: var(--ink-58); }
+  @media (max-width: 600px) { .guarantee { grid-template-columns: 1fr; gap: 24px; } }
+
+  /* ─── PHOTODOC ─── */
+  .doc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(20px, 3vw, 32px); margin-top: clamp(28px, 3vw, 40px); }
+  .doc-card { border: 1px solid var(--line-soft); border-radius: 3px; padding: clamp(28px, 3vw, 40px); }
+  .doc-card.dark { background: var(--ink); color: var(--cream); border-color: var(--ink); }
+  .doc-card .fig { font-family: 'TabacGlam', serif; font-size: clamp(2.6rem, 5vw, 3.6rem); line-height: .9; margin-bottom: 14px; }
+  .doc-card.dark .fig { color: var(--cream-60); }
+  .doc-card.light .fig { color: var(--ink-58); }
+  .doc-card h3 { font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 1.1rem; margin-bottom: 14px; }
+  .doc-card.dark h3 { color: var(--cream); }
+  .doc-card ul { list-style: none; display: flex; flex-direction: column; gap: 11px; }
+  .doc-card li { display: grid; grid-template-columns: auto 1fr; gap: 11px; font-size: .94rem; line-height: 1.5; }
+  .doc-card.light li { color: var(--ink-72); }
+  .doc-card.dark li { color: var(--cream-80); }
+  .doc-card li span { color: var(--ink-58); }
+  .doc-card.dark li span { color: var(--cream-60); }
+  .claim {
+    margin-top: clamp(24px, 3vw, 36px);
+    border: 1px solid var(--line); border-radius: 3px;
+    padding: clamp(24px, 3vw, 34px); max-width: 70ch;
+  }
+  .claim .label { font-size: .78rem; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-58); margin-bottom: 12px; }
+  .claim p { font-size: 1rem; color: var(--ink-72); line-height: 1.64; }
+  .claim strong { color: var(--ink); font-weight: 600; }
+  @media (max-width: 620px) { .doc-grid { grid-template-columns: 1fr; } }
+
+  /* ─── FINAL CTA : split with product image ─── */
+  .final {
+    background: var(--ink); color: var(--cream);
+    display: grid; grid-template-columns: 1fr 1fr;
+    min-height: 88vh;
+  }
+  .final-img { position: relative; overflow: hidden; }
+  .final-img img { width: 100%; height: 100%; object-fit: cover; object-position: center 20%; }
+  .final-copy {
+    padding: clamp(48px, 7vw, 110px) var(--pad-x) clamp(48px, 6vw, 96px);
+    display: flex; flex-direction: column; justify-content: center;
+  }
+  .final-copy .index { color: var(--cream-60); margin-bottom: 24px; }
+  .final-copy h2 { font-size: clamp(2.4rem, 4.6vw, 4rem); color: var(--cream); margin-bottom: 22px; }
+  .final-copy h2 .soft { color: var(--cream-60); font-style: italic; }
+  .final-copy .sub { font-size: 1.06rem; color: var(--cream-80); line-height: 1.64; max-width: 46ch; margin-bottom: clamp(28px, 4vw, 40px); }
+  .price-row {
+    display: flex; align-items: center; gap: 18px; flex-wrap: wrap;
+    padding: 26px 0; margin: clamp(8px,2vw,16px) 0 clamp(24px,3vw,32px);
+    border-top: 1px solid var(--cream-line); border-bottom: 1px solid var(--cream-line);
+  }
+  .price-row .price { font-family: 'TabacGlam', serif; font-size: clamp(2.6rem, 5vw, 3.6rem); color: var(--cream); line-height: 1; }
+  .price-row .price-note { font-size: .86rem; color: var(--cream-60); line-height: 1.5; max-width: 38ch; }
+  .final-feats { display: flex; flex-wrap: wrap; gap: 10px 22px; margin-top: clamp(26px, 3vw, 36px); }
+  .final-feats span { font-size: .8rem; color: var(--cream-80); display: inline-flex; align-items: center; gap: 8px; }
+  .final-feats span::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: var(--cream-60); }
+  .final-actions { margin-top: clamp(20px, 3vw, 28px); }
+  @media (max-width: 860px) {
+    .final { grid-template-columns: 1fr; min-height: 0; }
+    .final-img { order: 2; min-height: 56vh; }
+    .final-copy { order: 1; }
+  }
+
+  /* ─── FOOTER ─── */
+  footer { background: #161614; color: var(--cream-60); padding: clamp(36px, 5vw, 60px) var(--pad-x); font-size: .84rem; line-height: 1.8; }
+  .footer-inner { max-width: 1240px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 8px; text-align: center; }
+  .footer-inner p { max-width: 100%; text-wrap: pretty; }
+  .footer-company { color: var(--cream-80); font-weight: 600; }
+  footer a { min-height: 44px; display: inline-flex; align-items: center; color: var(--cream-80); text-decoration: none; border-bottom: 1px solid transparent; transition: border-color .2s; }
+  footer a:hover { border-color: var(--cream-60); }
+  footer .legal { font-size: .78rem; color: var(--cream-60); margin-top: 4px; }
+  footer .cc-footlink { min-height: 44px; display: inline-flex; align-items: center; background: none; border: none; border-bottom: 1px solid transparent; padding: 0; font: inherit; color: var(--cream-80); cursor: pointer; transition: border-color .2s; }
+  footer .cc-footlink:hover { border-color: var(--cream-60); }
+  footer .cc-footlink:focus-visible { outline: 2px solid var(--cream-60); outline-offset: 3px; }
+
+  /* ─── FOCUS / A11Y ─── */
+  a:focus-visible, button:focus-visible, .gbadge:focus-visible {
+    outline: 2px solid var(--ink); outline-offset: 3px; border-radius: 3px;
+  }
+  .block.dark a:focus-visible, .block.dark button:focus-visible,
+  .final a:focus-visible, .ribbon a:focus-visible, footer a:focus-visible,
+  .gbadge.on-dark:focus-visible, .hero-visual a:focus-visible {
+    outline-color: var(--cream);
+  }
+
+  /* ─── REVEAL (enhancement only; content visible by default) ─── */
+  .reveal { opacity: 1; transform: none; }
+  .js .reveal { opacity: 0; transform: translateY(22px); transition: opacity .8s var(--ease), transform .8s var(--ease); }
+  .js .reveal.in { opacity: 1; transform: none; }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .js .reveal { opacity: 1; transform: none; transition: none; }
+    .faq-a { transition: none; }
+    .ribbon-track { animation: none; }
+    .btn:hover, .btn-arrow, .btn:hover .btn-arrow { transform: none; }
+  }
+</style>
+<script>document.documentElement.classList.add('js');</script>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <a href="#" aria-label="Nogray's®"><img src="https://nograys.cz/wp-content/uploads/2026/06/ng-logo-dark.svg" alt="Nogray&#39;s®"></a>
+  <div class="nav-right">
+    <a href="https://nograys.cz/produkt/nograys-125-ml-zeny/" target="_blank" rel="noopener" class="btn btn-ink">Objednat<span class="nav-price"> – 1 190 Kč</span></a>
+  </div>
+</nav>
+
+<main id="main-content">
+<!-- HERO : asymmetric split, sticky image -->
+<header class="hero">
+  <div class="hero-copy">
+    <div class="hero-trust">
+      <span class="hero-guarantee">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11.5 14.5 16 9.5"/></svg>
+        <span class="hg-text"><span class="hg-days">14denní</span> garance spokojenosti</span>
+      </span>
+      <a href="https://share.google/lltt6OcmRwB1neBoA" target="_blank" rel="noopener" class="gbadge">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"></path><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"></path><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"></path><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"></path></svg>
+        <span class="rate">5,0</span>
+        <span class="stars" aria-hidden="true">★★★★★</span>
+        <span class="count">8 recenzí</span>
+      </a>
+    </div>
+    <div class="hero-kicker">
+      <span class="index">Pro ženy, které hledají přirozenost</span>
+    </div>
+    <h1>Vaše přirozená barva se <span class="soft">neztratila.</span> Jen usnula.</h1>
+    <p class="hero-sub">Enzymatické tonikum Nogray's® pomáhá postupně aktivovat přirozený pigment vlasů bez barvení, agresivní chemie a návštěvy kadeřnice. Výsledek působí nenápadně. Okolí si možná nevšimne změny. Jen toho, že Vám to poslední dobou nějak sluší.</p>
+    <div class="hero-actions">
+      <a href="https://nograys.cz/produkt/nograys-125-ml-zeny/" target="_blank" rel="noopener" class="btn btn-ink">Chci začít – 1 190 Kč <span class="btn-arrow" aria-hidden="true">→</span></a>
+      <a href="#jak-to-funguje" class="link-quiet">Jak to funguje?</a>
+    </div>
+    <span class="hero-ship">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M1 3h15v13H1z"/><path d="M16 8h4l3 3v5h-7z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+      Doprava zdarma při 2&nbsp;ks
+    </span>
+  </div>
+  <div class="hero-visual">
+    <div class="sticky-img">
+      <img src="https://nograys.cz/wp-content/uploads/2026/06/ng-zena-al-03.jpeg" alt="Nogray&#39;s® – přirozená obnova barvy vlasů" fetchpriority="high" decoding="async">
+    </div>
+    <div class="hero-tag">Výsledek, kterého si nikdo nevšimne. Jen toho, že Vám to sluší.</div>
+  </div>
+</header>
+
+<!-- TRUST RIBBON -->
+<div class="ribbon" aria-label="Vlastnosti produktu">
+  <div class="ribbon-track" aria-hidden="false">
+    <span>z 99 % přírodní složení</span>
+    <span>2–3 minuty ráno</span>
+    <span>Česká značka</span>
+    <span>Bez barvení. Bez odrostů.</span>
+    <span>Zásilkovna / DPD</span>
+    <span aria-hidden="true">z 99 % přírodní složení</span>
+    <span aria-hidden="true">2–3 minuty ráno</span>
+    <span aria-hidden="true">Česká značka</span>
+    <span aria-hidden="true">Bez barvení. Bez odrostů.</span>
+    <span aria-hidden="true">Zásilkovna / DPD</span>
+  </div>
+</div>
+
+<!-- BEFORE / AFTER (dark) -->
+
+<!-- PROBLEM -->
+<section class="block">
+  <div class="track">
+    <div class="track-rail sticky-rail">
+      <span class="index">Poznáváte se?</span>
+      <p class="rail-note">Barvení vs. naše cesta.</p>
+    </div>
+    <div class="track-main">
+      <h2 class="lede">Barvení vs. <span class="soft">naše cesta</span></h2>
+      <ul class="switch-list reveal">
+        <li><strong>Žádné termíny u kadeřnice.</strong> Žádné přeobjednávání, žádné čekání, žádné hodiny s fólií na hlavě.</li>
+        <li><strong>Žádné odrosty.</strong> Vlasy dorůstají rovnou ve vaší barvě, přirozeně a bez ostrých přechodů.</li>
+        <li><strong>Výsledek, který vypadá jako vy.</strong> Ne jako barva z tuby. Je to vaše vlastní barva, oživená zevnitř.</li>
+        <li><strong>Vlasy, které jsou zdravé.</strong> Bez amoniaku, bez peroxidu, bez chemického poškozování.</li>
+        <li><strong>Změna, které si nikdo nevšimne.</strong> Všimnou si jen toho, že vám to poslední dobou nějak sluší.</li>
+        <li><strong>Žádné míchání barvy doma,</strong> žádný nepořádek v koupelně, žádné špinavé ručníky od barvy.</li>
+      </ul>
+      <div class="manifesto reveal">
+        <div class="mark" aria-hidden="true">„</div>
+        <p>„Přestala jsem řešit termíny, odrosty i to, že chemie mi ničí vlasy. Mám svobodu a jsem to já.“</p>
+      </div>
+      <div class="block-cta">
+        <a href="https://nograys.cz/produkt/nograys-125-ml-zeny/" target="_blank" rel="noopener" class="btn btn-ink">Koupit Nogray's® <span class="btn-arrow" aria-hidden="true">→</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MECHANISM -->
+<section id="jak-to-funguje" class="block line">
+  <div class="track">
+    <div class="track-rail sticky-rail">
+      <span class="index">Jak to funguje</span>
+      <p class="rail-note">Enzymatický proces, ne chemická reakce.</p>
+    </div>
+    <div class="track-main">
+      <h2 class="lede">Není to barva. <span class="soft">Je to obnova.</span></h2>
+      <div class="ledger reveal">
+        <div class="ledger-head">
+          <div class="was">Chemická barva</div>
+          <div class="now">Nogray's®</div>
+        </div>
+        <div class="ledger-row">
+          <div class="ledger-cell was">Barví povrch vlasu</div>
+          <div class="ledger-cell now">Působí zevnitř vlasu</div>
+        </div>
+        <div class="ledger-row">
+          <div class="ledger-cell was">Ničí přirozenou strukturu</div>
+          <div class="ledger-cell now">Obnovuje vlastní pigment</div>
+        </div>
+        <div class="ledger-row">
+          <div class="ledger-cell was">Odrosty za pár týdnů</div>
+          <div class="ledger-cell now">Žádné odrosty</div>
+        </div>
+        <div class="ledger-row">
+          <div class="ledger-cell was">Chemie zatěžuje pokožku</div>
+          <div class="ledger-cell now">Přirozené tónování</div>
+        </div>
+        <div class="ledger-row">
+          <div class="ledger-cell was">Vyžaduje opakování</div>
+          <div class="ledger-cell now">Zdravé vlasy a méně lupů</div>
+        </div>
+      </div>
+      <div class="mech-prose">
+        <h3>Enzymatický proces, ne chemická reakce</h3>
+        <p>Nogray's® nebarví vlasy. Tonikum působí přímo v celé struktuře vlasu a aktivuje přirozenou tvorbu melaninu, pigmentu, který ve vašich vlasech stále je.</p>
+        <p>Protože pigment vzniká přímo uvnitř vlasové cibulky, nový vlas roste ve vaší původní barvě. Nevznikají žádné přechody ani odrosty. Výsledek vypadá jako vaše vlastní vlasy, protože to vaše vlastní vlasy jsou.</p>
+        <p>Výsledky nepřijdou přes noc. Vaše barva se vrací pomalu, přirozeně a nenápadně.</p>
+        <div class="pills">
+          <span class="pill">Enzymatický proces</span>
+          <span class="pill">Bez amoniaku</span>
+          <span class="pill">Bez peroxidu</span>
+          <span class="pill">Bez odrostů</span>
+        </div>
+      </div>
+      <div class="block-cta">
+        <a href="https://nograys.cz/produkt/nograys-125-ml-zeny/" target="_blank" rel="noopener" class="btn btn-ink">Objednat produkt <span class="btn-arrow" aria-hidden="true">→</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW TO USE (dark, numbered editorial run) -->
+<section class="block dark">
+  <div class="track">
+    <div class="track-rail sticky-rail">
+      <span class="index">Jak aplikovat</span>
+      <p class="rail-note">Jednoduchý ranní rituál, který se stane zvykem jako čištění zubů.</p>
+    </div>
+    <div class="track-main">
+      <h2 class="lede">2–3 minuty ráno. <span class="soft">To je vše.</span></h2>
+      <div class="steps reveal">
+        <div class="step">
+          <div class="fig" aria-hidden="true">01</div>
+          <div><h3>Protřepejte lahvičku</h3><p>Před každým použitím lahvičku protřepejte, aby se aktivní složky správně promísily.</p></div>
+        </div>
+        <div class="step">
+          <div class="fig" aria-hidden="true">02</div>
+          <div><h3>Naneste na suché vlasy</h3><p>Malé množství tonika naneste na suché vlasy po celé délce, nebo jen na místa se šedinami.</p></div>
+        </div>
+        <div class="step">
+          <div class="fig" aria-hidden="true">03</div>
+          <div><h3>Vmasírujte a pročešte</h3><p>Jemně vmasírujte ke kořínkům, pročešte hřebenem. Tonikum nemastí vlasy a nezanechává viditelné stopy.</p></div>
+        </div>
+        <div class="step">
+          <div class="fig" aria-hidden="true">04</div>
+          <div><h3>Neoplachujte alespoň 6 hodin</h3><p>Přípravek neoplachujte. Musí působit minimálně 6 hodin.</p></div>
+        </div>
+      </div>
+      <div class="block-cta">
+        <a href="https://nograys.cz/produkt/nograys-125-ml-zeny/" target="_blank" rel="noopener" class="btn btn-cream">Zobrazit na e-shopu <span class="btn-arrow" aria-hidden="true">→</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TIMELINE -->
+<section class="block line">
+  <div class="track">
+    <div class="track-rail sticky-rail">
+      <span class="index">Co čekat</span>
+      <p class="rail-note">Příroda nespěchá. A to je dobře.</p>
+    </div>
+    <div class="track-main">
+      <h2 class="lede">Příroda nespěchá. <span class="soft">A to je dobře.</span></h2>
+      <div class="phases reveal">
+        <div class="phase">
+          <div class="when"><b>14</b><span>dní</span></div>
+          <h3>První změny</h3>
+          <p>Vlasy vypadají živěji a sytěji. Šediny začínají ztrácet čistě bílý tón. Základ je položen.</p>
+        </div>
+        <div class="phase">
+          <div class="when"><b>3.</b><span>týden</span></div>
+          <h3>Viditelná obnova</h3>
+          <p>Přirozená barva se začíná vracet. Okolí si všimne, že vám to sluší, ale nebude vědět proč.</p>
+        </div>
+        <div class="phase">
+          <div class="when"><b>4+</b><span>týdny</span></div>
+          <h3>Stabilní výsledek</h3>
+          <p>Vlasy dorůstají ve vaší původní barvě. Stačí pokračovat v denní aplikaci pro udržení efektu.</p>
+        </div>
+      </div>
+      <p class="phase-note"><strong>Důležité:</strong> Každý organismus reaguje jinak. Výsledky závisí na množství přirozeného pigmentu, věku a pravidelnosti aplikace. Nogray's® funguje nejlépe při šedinách do 70 % celkových vlasů.</p>
+      <div class="block-cta">
+        <a href="https://nograys.cz/produkt/nograys-125-ml-zeny/" target="_blank" rel="noopener" class="btn btn-ink">Koupit Nogray's® <span class="btn-arrow" aria-hidden="true">→</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="block line">
+  <div class="track">
+    <div class="track-rail sticky-rail">
+      <span class="index">Co říkají zákaznice</span>
+      <p class="rail-note">Reálné výsledky, reálné ženy.</p>
+    </div>
+    <div class="track-main">
+      <h2 class="lede">Reálné výsledky, <span class="soft">reálné ženy</span></h2>
+      <div class="quotes reveal">
+        <div class="quote featured">
+          <div class="quote-aside">
+            <div class="avatar" aria-hidden="true">JK</div>
+            <div class="stars" aria-hidden="true">★★★★★</div>
+            <div class="name">Jana K.</div>
+            <div class="meta">44 let · Praha · používá 5 týdnů</div>
+            <span class="tag">Ověřená zákaznice</span>
+          </div>
+          <blockquote>„Po třech týdnech jsem si poprvé nevšimla těch pár šedin u spánků. Manžel řekl, že mi to nějak sluší. Nevěděl ani proč a to byl pro mě důkaz, že to funguje.“</blockquote>
+        </div>
+        <div class="quote small indent">
+          <div class="quote-aside">
+            <div class="avatar" aria-hidden="true">MH</div>
+            <div class="stars" aria-hidden="true">★★★★★</div>
+            <div class="name">Martina H.</div>
+            <div class="meta">38 let · Brno · používá 4 týdny</div>
+          </div>
+          <blockquote>„Byla jsem strašně skeptická. Jenže asi po čtrnácti dnech jsem začala vidět první probarvení vlasů, chvíli jsem tomu ani nevěřila. Nechci si barvit vlasy kvůli začínajícím šedinám, těch pár míst šedivých mi to krásně vyřeší a lahvička mi vydrží o to déle, protože to aplikuji jen na menší plochu vlasů.“</blockquote>
+        </div>
+        <div class="quote small">
+          <div class="quote-aside">
+            <div class="avatar" aria-hidden="true">LV</div>
+            <div class="stars" aria-hidden="true">★★★★★</div>
+            <div class="name">Lenka V.</div>
+            <div class="meta">47 let · Pardubice · používá 7 týdnů</div>
+          </div>
+          <blockquote>„Konečně jsem skončila s barvením. Čtyři roky jsem barvila každé tři týdny. Dnes mám vlasy zdravější a šediny pomalu mizí. Líbí se mi, že nemusím patlat barvu doma, nebo utrácet tolik za kadeřníka.“</blockquote>
+        </div>
+      </div>
+      <p class="quotes-foot">Jsme nová značka a recenze teprve sbíráme. Každé hodnocení nám pomáhá, proto děkujeme všem, kdo si na napsání najdou čas. Také proto nabízíme garanci vrácení peněz, aby první nákup nebyl skokem naslepo.</p>
+      <div class="block-cta">
+        <a href="https://nograys.cz/produkt/nograys-125-ml-zeny/" target="_blank" rel="noopener" class="btn btn-ink">Objednat produkt <span class="btn-arrow" aria-hidden="true">→</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MECHANISM 3-FÁZE : co se děje ve vlasu (dark) -->
+<section class="block dark">
+  <div class="track">
+    <div class="track-rail sticky-rail">
+      <span class="index">Reálný výsledek</span>
+      <p class="rail-note">Bez barvení. Bez filtru. Jen pravidelná aplikace Nogray's® po dobu 6 měsíců.</p>
+    </div>
+    <div class="track-main">
+      <h2 class="lede">Stejná žena. <span class="soft">Jiné vlasy.</span></h2>
+      <div style="margin-top:18px">
+        <a href="https://share.google/lltt6OcmRwB1neBoA" target="_blank" rel="noopener" class="gbadge on-dark">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"></path><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"></path><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"></path><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"></path></svg>
+          <span class="rate">5,0</span>
+          <span class="stars" aria-hidden="true">★★★★★</span>
+          <span class="count">8 recenzí</span>
+        </a>
+        <p class="review-note on-dark">Jsme nová značka a recenze teprve sbíráme. Proto máme garanci vrácení.</p>
+      </div>
+      <div class="ba-wrap reveal">
+        <div class="ba-grid">
+          <div class="ba-fig">
+            <img src="https://nograys.cz/wp-content/uploads/2025/05/Zeny-before-after-01-1024x966.jpeg" alt="Před použitím Nogray&#39;s®" loading="lazy" decoding="async">
+            <div class="ba-label before">Před</div>
+          </div>
+          <div class="ba-fig">
+            <img src="https://nograys.cz/wp-content/uploads/2025/05/Zeny-before-after-02-1024x966.jpeg" alt="Po použití Nogray&#39;s®" loading="lazy" decoding="async">
+            <div class="ba-label after">Po půl roce</div>
+          </div>
+        </div>
+        <div class="ba-quote">
+          <blockquote>„Čtvrtý týden jsem si všimla, že šediny u kořínků nejsou tak výrazné. Líbí se mi, že to vypadá přirozeně, ne jako barvení.“</blockquote>
+          <div class="cite">Jana, 44 let — po 4 týdnech</div>
+          <p class="ba-fine">Výsledky se mohou lišit. Fotografie není upravená.</p>
+        </div>
+      </div>
+      <div class="block-cta">
+        <a href="https://nograys.cz/produkt/nograys-125-ml-zeny/" target="_blank" rel="noopener" class="btn btn-cream">Zobrazit na e-shopu <span class="btn-arrow" aria-hidden="true">→</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="block dark">
+  <div class="track">
+    <div class="track-rail sticky-rail">
+      <span class="index">Co se děje ve vlasu</span>
+      <p class="rail-note">Tři fáze přirozené obnovy od šedin zpět k vaší barvě.</p>
+    </div>
+    <div class="track-main">
+      <h2 class="lede">Od šedin <span class="soft">zpět k vaší barvě.</span></h2>
+      <p class="body mech3-intro">Nogray's® je enzymatické tonikum, které aktivuje přirozenou tvorbu pigmentu v celé struktuře vlasu a postupně vrací vlasům jejich původní barvu. Působí zevnitř, bez barvení a bez zbytečné chemie, takže výsledky jsou přirozené a nenápadné.</p>
+    </div>
+  </div>
+
+  <div class="mech3-band">
+      <div class="mech3 reveal">
+        <figure class="mech3-stage">
+          <div class="mech3-media">
+            <!-- VIZUÁL 1/3: šedý vlas bez pigmentu -->
+            <img class="mech3-img" alt="Detail šedého vlasu bez pigmentu po celé jeho délce" loading="lazy" decoding="async" src="https://nograys.cz/wp-content/uploads/2026/07/hair-mechanism-step-01.jpeg">
+            <span class="mech3-label">Šediny ve vlasech</span>
+          </div>
+        </figure>
+
+        <figure class="mech3-stage">
+          <div class="mech3-media">
+            <!-- VIZUÁL 2/3: rovnoměrná obnova pigmentu v celé délce vlasu -->
+            <img class="mech3-img" alt="Aktivace pigmentu probíhá rovnoměrně v celé délce vlasu" loading="lazy" decoding="async" src="https://nograys.cz/wp-content/uploads/2026/07/hair-mechanism-step-02.jpeg">
+            <span class="mech3-label">Obnova vaší barvy</span>
+          </div>
+        </figure>
+
+        <figure class="mech3-stage">
+          <div class="mech3-media">
+            <!-- VIZUÁL 3/3: přirozený pigment v celé délce vlasu -->
+            <img class="mech3-img" alt="Detail přirozeně pigmentovaného tmavého vlasu po celé jeho délce" loading="lazy" decoding="async" src="https://nograys.cz/wp-content/uploads/2026/07/hair-mechanism-step-03.jpeg">
+            <span class="mech3-label">Návrat barvy bez chemie</span>
+          </div>
+        </figure>
+      </div>
+
+      <div class="mech3-flow" aria-hidden="true">
+        <span class="cap">Postupná, přirozená obnova</span>
+        <span class="line"></span>
+        <span class="head"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h15"/><path d="M13 6l6 6-6 6"/></svg></span>
+      </div>
+  </div>
+
+  <div class="track">
+    <div class="track-rail" aria-hidden="true"></div>
+    <div class="track-main">
+      <div class="block-cta">
+        <a href="https://nograys.cz/produkt/nograys-125-ml-zeny/" target="_blank" rel="noopener" class="btn btn-cream">Koupit Nogray's® <span class="btn-arrow" aria-hidden="true">→</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STORY -->
+<section class="block line">
+  <div class="track">
+    <div class="track-rail sticky-rail">
+      <span class="index">Doporučení zákaznice</span>
+      <p class="rail-note">Jedna věc, kterou bych si přála vědět dřív.</p>
+    </div>
+    <div class="track-main">
+      <h2 class="lede">Jedna věc, kterou bych si <span class="soft">přála vědět dřív</span></h2>
+      <div class="letter reveal">
+        <div class="letter-head">
+          <div class="letter-avatar" aria-hidden="true">PŠ</div>
+          <div>
+            <div class="letter-name">Petra Š., 55 let — Plzeň</div>
+            <div class="letter-meta">Barvila vlasy 6 let · Používá Nogray's® 11 týdnů</div>
+          </div>
+          <div class="letter-stars" aria-hidden="true">★★★★★</div>
+        </div>
+        <div class="letter-body">
+          <p class="intro">„Nogray's® mi opravdu pomohlo. Ale kdybych si před začátkem pořádně přečetla návod, ušetřila bych si zbytečné otázky a nejistotu v prvních týdnech. Všechno, co jsem potřebovala vědět, tam bylo napsané.“</p>
+          <div class="letter-tips">
+            <div class="label">Moje doporučení</div>
+            <ol>
+              <li>Přečtěte si celý návod ještě před první aplikací.</li>
+              <li>Pokud barvíte vlasy chemicky, počkejte 4–6 týdnů před zahájením.</li>
+              <li>Aplikujte každý den bez vynechání. Pravidelnost je základ.</li>
+              <li>Výsledky přijdou postupně, a právě proto vypadají přirozeně.</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+      <p class="letter-fine">Kompletní návod k použití najdete na <a class="link-quiet" href="https://nograys.cz/navod/pro-zeny/" target="_blank" rel="noopener">nograys.cz/navod/pro-zeny</a>.</p>
+      <div class="block-cta">
+        <a href="https://nograys.cz/produkt/nograys-125-ml-zeny/" target="_blank" rel="noopener" class="btn btn-ink">Koupit Nogray's® <span class="btn-arrow" aria-hidden="true">→</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INGREDIENTS -->
+<section class="block line">
+  <div class="track">
+    <div class="track-rail sticky-rail">
+      <span class="index">Složení</span>
+      <p class="rail-note">Žádné záhady. Jen 7 složek.</p>
+    </div>
+    <div class="track-main">
+      <h2 class="lede">Žádné záhady. <span class="soft">Jen 7 složek.</span></h2>
+      <div class="ingredients reveal">
+        <div class="ingredient">
+          <div class="ix" aria-hidden="true">01</div>
+          <div>
+            <h3>Octan stříbrný (Silver acetate)</h3>
+            <p>Klíčová aktivní složka bez olova a umělých barviv. Podporuje přirozenou tvorbu pigmentu a zajišťuje maximální účinnost přípravku.</p>
+          </div>
+        </div>
+        <div class="ingredient">
+          <div class="ix" aria-hidden="true">02</div>
+          <div>
+            <h3>Koenzym Q10 (Ubiquinone)</h3>
+            <p>Posiluje vlasovou strukturu, obnovuje elasticitu a dodává vlasům přirozený lesk. Stejná molekula, kterou má tělo v každé buňce.</p>
+          </div>
+        </div>
+        <div class="ingredient">
+          <div class="ix" aria-hidden="true">03</div>
+          <div>
+            <h3>Přírodní hydratační složky</h3>
+            <p>Udržují optimální vlhkost pokožky hlavy, předcházejí maštění a zajišťují pocit svěžesti po celý den.</p>
+          </div>
+        </div>
+        <div class="ingredient">
+          <div class="ix" aria-hidden="true">04</div>
+          <div>
+            <h3>Síra (Sulfur), účinek proti lupům</h3>
+            <p>Přirozeně reguluje pokožku hlavy a zabraňuje tvorbě lupů. Zdravá pokožka hlavy je podmínkou pro správnou funkci vlasové cibulky.</p>
+          </div>
+        </div>
+      </div>
+      <div class="inci">
+        <strong>Kompletní složení (INCI):</strong> Aqua, Propylene Glycol, Sulfur, Ammonium Chloride, Silver Acetate, Ubiquinone, Parfum<br>
+        Veganský produkt. Netestováno na zvířatech.
+      </div>
+      <div class="count-panel" style="margin-top:clamp(36px,4vw,52px)">
+        <span class="big">7</span>
+        <div class="cap">ingrediencí celkem</div>
+        <hr>
+        <p>Zatímco běžná barva na vlasy obsahuje 30–50 složek (včetně amoniaku, peroxidu a PPD), Nogray's® staví na sedmi. Každou si můžete přečíst a vyhledat.</p>
+        <div class="origin">
+          <div class="k">Původ</div>
+          <div class="v">Česká značka</div>
+        </div>
+      </div>
+      <div class="block-cta">
+        <a href="https://nograys.cz/produkt/nograys-125-ml-zeny/" target="_blank" rel="noopener" class="btn btn-ink">Objednat produkt <span class="btn-arrow" aria-hidden="true">→</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GATEKEEPING (dark) -->
+<section class="block dark">
+  <div class="track">
+    <div class="track-rail sticky-rail">
+      <span class="index">Pro koho to je</span>
+      <p class="rail-note">Chceme, aby vám Nogray's® opravdu pomohlo. Proto vám upřímně řekneme, pro koho je a komu nepomůže tak, jak byste chtěla.</p>
+    </div>
+    <div class="track-main">
+      <h2 class="lede">Pro koho Nogray's® <span class="soft">funguje nejlépe?</span></h2>
+      <div style="margin-top:18px">
+        <a href="https://share.google/lltt6OcmRwB1neBoA" target="_blank" rel="noopener" class="gbadge on-dark">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"></path><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"></path><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"></path><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"></path></svg>
+          <span class="rate">5,0</span>
+          <span class="stars" aria-hidden="true">★★★★★</span>
+          <span class="count">8 recenzí</span>
+        </a>
+        <p class="review-note on-dark">Jsme nová značka a recenze teprve sbíráme. Proto máme garanci vrácení.</p>
+      </div>
+      <div class="gate-cols reveal">
+        <div class="gate-col yes">
+          <h3>Nogray's® je pro Vás, pokud…</h3>
+          <ul>
+            <li>Šediny pokrývají méně než 70 % vašich vlasů.</li>
+            <li>Hledáte přirozené, postupné řešení, ne okamžitou změnu.</li>
+            <li>Nevadí Vám počkat 3–5 týdnů na výraznější výsledky.</li>
+            <li>Jste ochotná aplikovat každý den bez vynechávání.</li>
+            <li>Chcete skončit s chemickým barvením nebo prodloužit jeho intervaly.</li>
+            <li>Před zahájením jste minimálně 4–6 týdnů nebarvila vlasy chemicky.</li>
+          </ul>
+        </div>
+        <div class="gate-col no">
+          <h3>Nogray's® pro Vás není, pokud…</h3>
+          <ul>
+            <li>Máte více než 70 % šedin. Efekt bude minimální.</li>
+            <li>Máte méně než 30–40 % přirozeného melaninu. Přípravek nemá na co navázat.</li>
+            <li>Čekáte výsledky do týdne jako od barvy z drogerie.</li>
+            <li>Nejste schopná nebo ochotná aplikovat každý den.</li>
+            <li>Barvíte vlasy chemicky a nehodláte s tím přestat (dočasně).</li>
+            <li>Hledáte 100% jistý výsledek. Příroda nepracuje v garancích.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="block-cta">
+        <a href="https://nograys.cz/produkt/nograys-125-ml-zeny/" target="_blank" rel="noopener" class="btn btn-cream">Zobrazit na e-shopu <span class="btn-arrow" aria-hidden="true">→</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="block line">
+  <div class="track">
+    <div class="track-rail sticky-rail">
+      <span class="index">Časté otázky</span>
+      <p class="rail-note">Co vás zajímá.</p>
+    </div>
+    <div class="track-main">
+      <h2 class="lede">Co vás zajímá</h2>
+      <div class="faq">
+        <div class="faq-item">
+          <button type="button" class="faq-q" id="faq-q-1" aria-expanded="false" aria-controls="faq-a-1">Opravdu to není barva? Jak to tedy funguje?<span class="faq-icon" aria-hidden="true"></span></button>
+          <div class="faq-a" id="faq-a-1" role="region" aria-labelledby="faq-q-1" aria-hidden="true"><div class="faq-a-inner"><div class="faq-a-copy">Nogray's® je enzymatické tonikum, nikoliv barva. Nepůsobí na povrchu vlasu, ale aktivuje přirozenou tvorbu melaninu přímo uvnitř vlasové cibulky. Vlasy si proto samy začínají obnovovat svoji původní barvu.</div></div></div>
+        </div>
+        <div class="faq-item">
+          <button type="button" class="faq-q" id="faq-q-2" aria-expanded="false" aria-controls="faq-a-2">Za jak dlouho uvidím výsledky?<span class="faq-icon" aria-hidden="true"></span></button>
+          <div class="faq-a" id="faq-a-2" role="region" aria-labelledby="faq-q-2" aria-hidden="true"><div class="faq-a-inner"><div class="faq-a-copy">Každý organismus reaguje jinak. Orientačně: první změny přicházejí kolem 14. dne. Výraznější obnova barvy je patrná u většiny zákaznic ve 3.–5. týdnu. Pro stabilní výsledek je klíčová každodenní aplikace bez vynechávání.</div></div></div>
+        </div>
+        <div class="faq-item">
+          <button type="button" class="faq-q" id="faq-q-3" aria-expanded="false" aria-controls="faq-a-3">Mohu Nogray's® používat, pokud barvím vlasy?<span class="faq-icon" aria-hidden="true"></span></button>
+          <div class="faq-a" id="faq-a-3" role="region" aria-labelledby="faq-q-3" aria-hidden="true"><div class="faq-a-inner"><div class="faq-a-copy">Doporučujeme 4–6 týdnů před zahájením Nogray's® nebarvit vlasy chemicky. Přípravek je přírodní, reakci s chemickými barvami nebo peroxidem proto nelze předvídat. Vždy doporučujeme začít testem na malém prameni vlasů.</div></div></div>
+        </div>
+        <div class="faq-item">
+          <button type="button" class="faq-q" id="faq-q-4" aria-expanded="false" aria-controls="faq-a-4">Co se stane, když přestanu používat?<span class="faq-icon" aria-hidden="true"></span></button>
+          <div class="faq-a" id="faq-a-4" role="region" aria-labelledby="faq-q-4" aria-hidden="true"><div class="faq-a-inner"><div class="faq-a-copy">Při snížení nebo přerušení aplikace se efekt postupně vytrácí a šediny se začnou vracet. Je to přirozené, tělo potřebuje pravidelný přísun aktivních složek pro udržení tvorby melaninu.</div></div></div>
+        </div>
+        <div class="faq-item">
+          <button type="button" class="faq-q" id="faq-q-5" aria-expanded="false" aria-controls="faq-a-5">Mám zcela bílé vlasy. Pomůže mi Nogray's®?<span class="faq-icon" aria-hidden="true"></span></button>
+          <div class="faq-a" id="faq-a-5" role="region" aria-labelledby="faq-q-5" aria-hidden="true"><div class="faq-a-inner"><div class="faq-a-copy">Přípravek vyžaduje ke správné funkci alespoň 30–40 % přirozeného melaninu ve vlasech. Pokud jsou vlasy zcela bílé a melanin zcela chybí, efekt bude minimální nebo žádný. Doporučujeme začít testem na malé ploše a vyčkat 2–3 týdny.</div></div></div>
+        </div>
+        <div class="faq-item">
+          <button type="button" class="faq-q" id="faq-q-6" aria-expanded="false" aria-controls="faq-a-6">Proč se mi může objevit načervenalý tón?<span class="faq-icon" aria-hidden="true"></span></button>
+          <div class="faq-a" id="faq-a-6" role="region" aria-labelledby="faq-q-6" aria-hidden="true"><div class="faq-a-inner"><div class="faq-a-copy">U velmi světlých nebo bílých vlasů se může v průběhu obnovy pigmentu přechodně objevit načervenalý odstín. Je to normální reakce těla a samo se to časem vyrovná. Doporučujeme aplikovat menší množství a vydržet alespoň 2–3 týdny.</div></div></div>
+        </div>
+      </div>
+      <div class="block-cta">
+        <a href="https://nograys.cz/produkt/nograys-125-ml-zeny/" target="_blank" rel="noopener" class="btn btn-ink">Koupit Nogray's® <span class="btn-arrow" aria-hidden="true">→</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GUARANTEE -->
+<section class="block line">
+  <div class="track">
+    <div class="track-rail sticky-rail">
+      <span class="index">Garance</span>
+      <p class="rail-note">Vyzkoušejte bez rizika. 14 dní.</p>
+    </div>
+    <div class="track-main">
+      <div class="guarantee">
+        <div class="seal"><b>14</b><span>dní</span></div>
+        <div class="guarantee-text">
+          <h2>Vyzkoušejte bez rizika. 14 dní.</h2>
+          <p>Věříme, že při každodenním používání uvidíte první změny do 14 dní. Pokud se tak nestane, ozvěte se nám. Vrátíte nám přípravek a my Vám vrátíme celou částku.</p>
+          <p>Jde nám o zákaznice, kterým Nogray's® opravdu pomůže. Proto garance existuje.</p>
+          <p class="fine">Garance platí při každodenním používání. Uplatňuje se emailem na info@nograys.cz nejpozději 16. den od doručení.</p>
+        </div>
+      </div>
+      <div class="block-cta">
+        <a href="https://nograys.cz/produkt/nograys-125-ml-zeny/" target="_blank" rel="noopener" class="btn btn-ink">Objednat produkt <span class="btn-arrow" aria-hidden="true">→</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PHOTODOC -->
+<section class="block line">
+  <div class="track">
+    <div class="track-rail sticky-rail">
+      <span class="index">Jak garanci uplatnit</span>
+      <p class="rail-note">Žádáme o jednoduchou fotodokumentaci, abyste měla důkaz vy a my mohli garanci posoudit férově.</p>
+    </div>
+    <div class="track-main">
+      <h2 class="lede">Nafotěte se před i po. <span class="soft">Tím získáte důkaz.</span></h2>
+      <div class="doc-grid reveal">
+        <div class="doc-card light">
+          <div class="fig" aria-hidden="true">0</div>
+          <h3>Den 0: před první aplikací</h3>
+          <ul>
+            <li><span aria-hidden="true">→</span> Přirozené denní světlo, u okna, ne protisvětlo</li>
+            <li><span aria-hidden="true">→</span> Suché vlasy bez stylingových produktů</li>
+            <li><span aria-hidden="true">→</span> Záběr na partie se šedinami, například spánky nebo pěšinu</li>
+            <li><span aria-hidden="true">→</span> Vzdálenost cca 30–40 cm, ostrý detail</li>
+            <li><span aria-hidden="true">→</span> Fotku uložte s datem</li>
+          </ul>
+        </div>
+        <div class="doc-card dark">
+          <div class="fig" aria-hidden="true">14</div>
+          <h3>Den 14: po dvou týdnech</h3>
+          <ul>
+            <li><span aria-hidden="true">→</span> Stejné světlo, stejný úhel, stejná vzdálenost</li>
+            <li><span aria-hidden="true">→</span> Suché vlasy bez stylingových produktů</li>
+            <li><span aria-hidden="true">→</span> Fotku označte datem</li>
+            <li><span aria-hidden="true">→</span> Pokud první změny nevidíte, napište nám a přiložte obě fotografie</li>
+          </ul>
+        </div>
+      </div>
+      <div class="claim">
+        <div class="label">Uplatnění garance</div>
+        <p>E-mail na <strong>info@nograys.cz</strong> s předmětem <strong>„Garance 14 dní“</strong> + obě fotky. Nejpozději 16. den od doručení.</p>
+      </div>
+      <div class="block-cta">
+        <a href="https://nograys.cz/produkt/nograys-125-ml-zeny/" target="_blank" rel="noopener" class="btn btn-ink">Zobrazit na e-shopu <span class="btn-arrow" aria-hidden="true">→</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA : split with product image -->
+<section class="final">
+  <div class="final-img">
+    <img src="https://nograys.cz/wp-content/uploads/2026/06/ng-zena-al-03.jpeg" alt="Nogray&#39;s® 125 ml" loading="lazy" decoding="async">
+  </div>
+  <div class="final-copy">
+    <span class="index">Začít teď</span>
+    <h2>Vaše přirozená barva čeká, až ji <span class="soft">probudíte.</span></h2>
+    <p class="sub">Každý den bez Nogray's® je den, kdy pigment dál spí. Čím dřív začnete, tím dřív uvidíte výsledky.</p>
+    <div style="margin-bottom:8px">
+      <a href="https://share.google/lltt6OcmRwB1neBoA" target="_blank" rel="noopener" class="gbadge on-dark">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"></path><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"></path><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"></path><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"></path></svg>
+        <span class="rate">5,0</span>
+        <span class="stars" aria-hidden="true">★★★★★</span>
+        <span class="count">8 recenzí</span>
+      </a>
+      <p class="review-note on-dark">Jsme nová značka a recenze teprve sbíráme. Proto máme garanci vrácení.</p>
+    </div>
+    <div class="price-row">
+      <div class="price">1 190 Kč</div>
+      <div class="price-note">125 ml · včetně DPH<br>doprava od 89 Kč <span style="white-space:nowrap">(zdarma při 2 ks)</span></div>
+    </div>
+    <div class="final-actions">
+      <a href="https://nograys.cz/produkt/nograys-125-ml-zeny/" target="_blank" rel="noopener" class="btn btn-cream">Objednat Nogray's® <span class="btn-arrow" aria-hidden="true">→</span></a>
+    </div>
+    <div class="final-feats">
+      <span>99 % přírodní složení</span>
+      <span>Česká značka</span>
+      <span>14denní garance</span>
+      <span>Vegan · Netestováno na zvířatech</span>
+      <span>Zásilkovna / DPD</span>
+    </div>
+  </div>
+</section>
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <p><strong class="footer-company">Nogray's s.r.o.</strong> · Kroftova 10, 150 00 Praha · <a href="tel:+420773226871">+420 773 226 871</a> · <a href="mailto:info@nograys.cz">info@nograys.cz</a></p>
+    <p><a href="https://nograys.cz/obchodni-podminky" target="_blank" rel="noopener">Obchodní podmínky</a> · <a href="https://nograys.cz/zasady-ochrany-osobnich-udaju" target="_blank" rel="noopener">Zásady ochrany osobních údajů</a> · <a href="https://nograys.cz/reklamace-a-vraceni-zbozi" target="_blank" rel="noopener">Reklamace a vrácení zboží</a> · <button type="button" id="ng-cc-reopen" class="cc-footlink">Nastavení cookies</button></p>
+    <p class="legal">© 2026 Nogray's s.r.o. · Výsledky se mohou lišit. Přípravek není léčivý přípravek. · <span id="lp-verze">v05</span></p>
+  </div>
+</footer>
+
+<script>
+  // FAQ accordion: accessible buttons, keyboard-native
+  document.querySelectorAll('.faq-q').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var open = btn.getAttribute('aria-expanded') === 'true';
+      document.querySelectorAll('.faq-q').forEach(function (b) {
+        b.setAttribute('aria-expanded', 'false');
+        b.nextElementSibling.setAttribute('aria-hidden', 'true');
+      });
+      if (!open) {
+        btn.setAttribute('aria-expanded', 'true');
+        btn.nextElementSibling.setAttribute('aria-hidden', 'false');
+      }
+    });
+  });
+
+  // Reveal enhancement: content is visible by default; this only adds entrance motion
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!reduce && 'IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(function (el) { io.observe(el); });
+  } else {
+    document.querySelectorAll('.reveal').forEach(function (el) { el.classList.add('in'); });
+  }
+</script>
+
+<!-- ─── Cookie consent (CMP): kategorie + granulární souhlas; gates GA4 + Meta/GTM ─── -->
+<style>
+  #ng-cc-overlay { position: fixed; inset: 0; z-index: var(--z-modal, 1000);
+    display: flex; align-items: center; justify-content: center; padding: 20px;
+    background: rgba(14,14,14,.5); -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px);
+    font-family: 'DM Sans', sans-serif; opacity: 0; transition: opacity .32s var(--ease, ease-out); }
+  #ng-cc-overlay.cc-show { opacity: 1; }
+  #ng-cc-overlay[hidden] { display: none; }
+  #ng-cc { position: relative; background: var(--cream, #f9f5ea); color: var(--ink, #0e0e0e);
+    border: 1px solid var(--line-soft, rgba(14,14,14,.1)); border-radius: 8px;
+    width: min(540px, 100%); max-height: calc(100vh - 40px); max-height: calc(100dvh - 40px); overflow-y: auto;
+    padding: clamp(30px, 4vw, 44px) clamp(24px, 4vw, 44px) clamp(24px, 3vw, 34px);
+    box-shadow: 0 1px 0 rgba(249,245,234,.5) inset, 0 40px 90px -22px rgba(14,14,14,.5);
+    transform: translateY(14px) scale(.985); opacity: 0;
+    transition: transform .44s var(--ease, ease-out), opacity .36s var(--ease, ease-out); }
+  #ng-cc-overlay.cc-show #ng-cc { transform: none; opacity: 1; }
+  #ng-cc [hidden] { display: none; }
+
+  #ng-cc .cc-x { position: absolute; top: 14px; right: 14px; width: 44px; height: 44px;
+    display: flex; align-items: center; justify-content: center; border: none; border-radius: 50%;
+    background: transparent; color: var(--ink-58, rgba(14,14,14,.66)); cursor: pointer; transition: background .2s, color .2s; }
+  #ng-cc .cc-x:hover { background: rgba(14,14,14,.06); color: var(--ink, #0e0e0e); }
+  #ng-cc .cc-x:focus-visible { outline: 2px solid var(--ink, #0e0e0e); outline-offset: 2px; }
+  #ng-cc .cc-x svg { width: 16px; height: 16px; }
+
+  #ng-cc h2 { font-family: 'TabacGlam', Georgia, serif; font-weight: 400; font-size: clamp(1.55rem, 3.4vw, 1.95rem);
+    line-height: 1.1; letter-spacing: -.01em; margin: 0 40px 14px 0; color: var(--ink, #0e0e0e); text-wrap: balance; }
+  #ng-cc .cc-desc { font-size: 1rem; line-height: 1.62; color: var(--ink-72, rgba(14,14,14,.72)); margin: 0 0 16px; max-width: 44ch; }
+  #ng-cc .cc-more { display: inline-block; margin-bottom: 26px; font-size: .9rem; color: var(--ink-72, rgba(14,14,14,.72));
+    text-decoration: none; border-bottom: 1px solid var(--ink-58, rgba(14,14,14,.4)); padding-bottom: 2px; transition: color .2s, border-color .2s; }
+  #ng-cc .cc-more:hover { color: var(--ink, #0e0e0e); border-color: var(--ink, #0e0e0e); }
+  #ng-cc .cc-more:focus-visible { outline: 2px solid var(--ink, #0e0e0e); outline-offset: 3px; }
+
+  #ng-cc .cc-actions { display: flex; gap: 12px; }
+  #ng-cc .cc-actions .btn { flex: 1; min-height: 50px; padding: 13px 20px; }
+
+  #ng-cc .cc-foot { display: flex; flex-wrap: wrap; gap: 8px 22px; justify-content: space-between; align-items: center;
+    margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--line-soft, rgba(14,14,14,.1)); }
+  #ng-cc .cc-quiet { background: none; border: none; padding: 4px 0; cursor: pointer;
+    font-family: 'DM Sans', sans-serif; font-size: .86rem; color: var(--ink-72, rgba(14,14,14,.72));
+    text-decoration: none; transition: color .2s; }
+  #ng-cc .cc-quiet:hover { color: var(--ink, #0e0e0e); }
+  #ng-cc .cc-quiet:focus-visible { outline: 2px solid var(--ink, #0e0e0e); outline-offset: 3px; border-radius: 2px; }
+  #ng-cc .cc-back { display: inline-flex; align-items: center; gap: 6px; margin: 0 0 16px; }
+
+  #ng-cc .cc-cats { margin: 4px 0 22px; }
+  #ng-cc .cc-cat { display: flex; gap: 20px; align-items: center; justify-content: space-between;
+    padding: 16px 0; border-bottom: 1px solid var(--line-soft, rgba(14,14,14,.1)); }
+  #ng-cc .cc-cat:first-child { border-top: 1px solid var(--line-soft, rgba(14,14,14,.1)); }
+  #ng-cc .cc-cat h3 { font-family: 'DM Sans', sans-serif; font-size: .98rem; font-weight: 600; margin: 0 0 3px; color: var(--ink, #0e0e0e); }
+  #ng-cc .cc-cat .cc-cat-d { font-size: .85rem; line-height: 1.5; color: var(--ink-72, rgba(14,14,14,.72)); max-width: 38ch; }
+
+  #ng-cc .cc-switch { position: relative; flex: 0 0 auto; display: inline-flex; align-items: center; height: 44px; cursor: pointer; }
+  #ng-cc .cc-switch input { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: pointer; }
+  #ng-cc .cc-switch input:disabled { cursor: not-allowed; }
+  #ng-cc .cc-track { width: 46px; height: 27px; border-radius: 999px; position: relative;
+    background: rgba(14,14,14,.14); border: 1px solid var(--line, rgba(14,14,14,.16));
+    transition: background .25s var(--ease, ease-out), border-color .25s var(--ease, ease-out); }
+  #ng-cc .cc-track::after { content: ''; position: absolute; top: 2px; left: 2px; width: 21px; height: 21px; border-radius: 50%;
+    background: var(--cream, #f9f5ea); box-shadow: 0 1px 3px rgba(14,14,14,.35); transition: transform .26s var(--ease, ease-out); }
+  #ng-cc .cc-switch input:checked + .cc-track { background: var(--ink, #0e0e0e); border-color: var(--ink, #0e0e0e); }
+  #ng-cc .cc-switch input:checked + .cc-track::after { transform: translateX(19px); }
+  #ng-cc .cc-switch input:focus-visible + .cc-track { outline: 2px solid var(--ink, #0e0e0e); outline-offset: 3px; }
+  #ng-cc .cc-switch input:disabled + .cc-track { opacity: .45; }
+
+  /* „Nastavení cookies" je přesunuto do patičky (.cc-footlink) */
+
+  @media (max-width: 540px) {
+    #ng-cc .cc-actions { flex-direction: column; }
+    #ng-cc .cc-cat { gap: 14px; }
+    #ng-cc .cc-cat .cc-cat-d { max-width: none; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    #ng-cc-overlay, #ng-cc, #ng-cc .cc-track, #ng-cc .cc-track::after, #ng-cc-reopen { transition: none; }
+    #ng-cc { transform: none; }
+  }
+</style>
+<div id="ng-cc-overlay" hidden>
+  <div id="ng-cc" role="dialog" aria-modal="true" aria-labelledby="ng-cc-title">
+    <button type="button" class="cc-x" id="ng-cc-x" aria-label="Zavřít">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+
+    <!-- Souhrn -->
+    <div id="ng-cc-main">
+      <h2 id="ng-cc-title">Cookies a soukromí</h2>
+      <p class="cc-desc">Abychom vám mohli ukazovat produkty, které vás budou skutečně zajímat, a nenabízeli vám produkty, které vás nezajímají, potřebujeme váš souhlas s využitím cookies. Pomáhají nám zlepšovat celý e-shop pro vaše pohodlí. Vaše data jsou u nás v naprostém bezpečí.</p>
+      <a class="cc-more" href="https://nograys.cz/co-jsou-soubory-cookies/" target="_blank" rel="noopener">Více o cookies</a>
+      <div class="cc-actions">
+        <button type="button" class="btn btn-ink" id="ng-cc-accept">Přijmout vše</button>
+        <button type="button" class="btn btn-outline" id="ng-cc-reject">Odmítnout</button>
+      </div>
+      <div class="cc-foot">
+        <button type="button" class="cc-quiet" id="ng-cc-customize">Upravit nastavení</button>
+        <a class="cc-quiet" href="https://nograys.cz/ochrana-osobnich-udaju/" target="_blank" rel="noopener">Zásady ochrany osobních údajů</a>
+      </div>
+    </div>
+
+    <!-- Nastavení podle kategorií -->
+    <div id="ng-cc-settings" hidden>
+      <button type="button" class="cc-quiet cc-back" id="ng-cc-back">
+        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 6l-6 6 6 6"/></svg>
+        Zpět
+      </button>
+      <h2>Nastavení cookies</h2>
+      <div class="cc-cats">
+        <div class="cc-cat">
+          <div>
+            <h3>Nezbytné</h3>
+            <div class="cc-cat-d">Nutné pro základní fungování stránky a zapamatování vaší volby. Nelze vypnout.</div>
+          </div>
+          <label class="cc-switch"><input type="checkbox" checked disabled aria-label="Nezbytné cookies, vždy aktivní"><span class="cc-track" aria-hidden="true"></span></label>
+        </div>
+        <div class="cc-cat">
+          <div>
+            <h3>Analytické</h3>
+            <div class="cc-cat-d">Anonymně měří návštěvnost, abychom e-shop vylepšovali (Google Analytics).</div>
+          </div>
+          <label class="cc-switch"><input type="checkbox" id="ng-cc-stats" aria-label="Analytické cookies"><span class="cc-track" aria-hidden="true"></span></label>
+        </div>
+        <div class="cc-cat">
+          <div>
+            <h3>Marketingové</h3>
+            <div class="cc-cat-d">Umožňují ukazovat vám relevantní nabídky i mimo náš web (Meta Pixel).</div>
+          </div>
+          <label class="cc-switch"><input type="checkbox" id="ng-cc-mkt" aria-label="Marketingové cookies"><span class="cc-track" aria-hidden="true"></span></label>
+        </div>
+      </div>
+      <div class="cc-actions">
+        <button type="button" class="btn btn-ink" id="ng-cc-save">Uložit nastavení</button>
+        <button type="button" class="btn btn-outline" id="ng-cc-accept2">Přijmout vše</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+(function () {
+  function $(id){ return document.getElementById(id); }
+  var COOKIE = 'ng_cookie_consent', ANIM = 380;
+  function getCookie(n){ var m = document.cookie.match('(?:^|; )' + n + '=([^;]*)'); return m ? decodeURIComponent(m[1]) : ''; }
+  function setCookie(n,v){ var d = new Date(); d.setTime(d.getTime() + 180*864e5); document.cookie = n+'='+v+';expires='+d.toUTCString()+';path=/;SameSite=Lax'; }
+  var overlay = $('ng-cc-overlay'), reopen = $('ng-cc-reopen'),
+      vMain = $('ng-cc-main'), vSet = $('ng-cc-settings'),
+      chkStats = $('ng-cc-stats'), chkMkt = $('ng-cc-mkt');
+  var done = { a:false, m:false }, curA = false, curM = false, closeT;
+  function lock(on){ document.documentElement.style.overflow = on ? 'hidden' : ''; document.body.style.overflow = on ? 'hidden' : ''; }
+  function loadAnalytics(){
+    if (done.a) return; done.a = true;
+    window.dataLayer = window.dataLayer || []; function gtag(){ dataLayer.push(arguments); }
+    var ga = document.createElement('script'); ga.async = true; ga.src = 'https://www.googletagmanager.com/gtag/js?id=G-1JP2S3RCXP'; document.head.appendChild(ga);
+    gtag('js', new Date()); gtag('config', 'G-1JP2S3RCXP');
+  }
+  function loadMarketing(){
+    if (done.m) return; done.m = true;
+    // Google Tag Manager
+    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-TZ4CXC4T');
+    // Meta Pixel
+    !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '1292209019737220'); fbq('track', 'PageView');
+  }
+  function apply(a,m){ if (a) loadAnalytics(); if (m) loadMarketing(); }
+  function view(v){ vMain.hidden = (v !== 'main'); vSet.hidden = (v !== 'settings'); }
+  function open(v){ window.clearTimeout(closeT); view(v || 'main'); overlay.hidden = false; lock(true);
+    requestAnimationFrame(function(){ requestAnimationFrame(function(){ overlay.classList.add('cc-show'); }); }); }
+  function close(){ overlay.classList.remove('cc-show'); lock(false);
+    closeT = window.setTimeout(function(){ overlay.hidden = true; }, ANIM); }
+  function save(a,m){ curA = a; curM = m; setCookie(COOKIE, 'A'+(a?1:0)+'M'+(m?1:0)); close(); apply(a,m); }
+  $('ng-cc-accept').addEventListener('click', function(){ save(true, true); });
+  $('ng-cc-accept2').addEventListener('click', function(){ save(true, true); });
+  $('ng-cc-reject').addEventListener('click', function(){ save(false, false); });
+  $('ng-cc-x').addEventListener('click', function(){ save(false, false); });
+  $('ng-cc-customize').addEventListener('click', function(){ view('settings'); });
+  $('ng-cc-back').addEventListener('click', function(){ view('main'); });
+  $('ng-cc-save').addEventListener('click', function(){ save(chkStats.checked, chkMkt.checked); });
+  reopen.addEventListener('click', function(){ chkStats.checked = curA; chkMkt.checked = curM; open('settings'); });
+  var c = getCookie(COOKIE);
+  if (c) { curA = /A1/.test(c); curM = /M1/.test(c); apply(curA, curM); }
+  else { open('main'); }
+})();
+</script>
+<script>
+(function () {
+  var hero = document.querySelector('.hero');
+  var nav = document.querySelector('.nav');
+  if (!nav) return;
+  if (!hero || !('IntersectionObserver' in window)) { nav.classList.add('is-past-hero'); return; }
+  var io = new IntersectionObserver(function (entries) {
+    nav.classList.toggle('is-past-hero', !entries[0].isIntersecting);
+  }, { threshold: 0 });
+  io.observe(hero);
+})();
+</script>
+</body>
+</html>
