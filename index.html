@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="cs">
 <head>
-<!-- Nogray's LP pro zeny · verze v08 · archiv verzi: https://ionfet.github.io/nograys-landing-zeny/archiv/ -->
+<!-- Nogray's LP pro zeny · verze v09 · archiv verzi: https://ionfet.github.io/nograys-landing-zeny/archiv/ -->
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Nogray's® – Vraťte vlasům přirozenou barvu. Bez barvení.</title>
@@ -256,6 +256,8 @@
     white-space: nowrap;
   }
   .cert-badge svg { width: 18px; height: 18px; color: #c98a16; flex: none; }
+  /* popisek vyplní volné místo → otazník vždy na konci dlaždice (na mobilu ve 2 sloupcích jinak „plaval“) */
+  .cert-badge > span:first-of-type { flex: 1 1 auto; min-width: 0; }
   .cert-badges.on-dark .cert-badge { background: rgba(249,245,234,.05); border-color: var(--cream-line); color: var(--cream); }
   .cert-badges.on-dark .cert-badge svg { color: #e0b24c; }
   .hero-cert { margin: 0 0 clamp(20px, 2.2vw, 28px); }
@@ -301,7 +303,9 @@
   @media (max-width: 720px) { .mech3-cert { grid-template-columns: minmax(0, 1fr); } }
   @media (max-width: 600px) {
     .cert-badges { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
-    .cert-badge { white-space: normal; font-size: .74rem; padding: 8px 10px; line-height: 1.25; min-height: 52px; }
+    .cert-badge { white-space: normal; font-size: .74rem; padding: 8px 10px; line-height: 1.25; }
+    /* dlaždice s otazníkem potřebují ~173 px; když se 2 sloupce nevejdou (≤ ~400 px), řadí se pod sebe místo přetečení otazníku */
+    .hero-cert, .final-cert { grid-template-columns: repeat(auto-fit, minmax(min(100%, 9.75rem), 1fr)); }
     .hero-cert { order: 1; margin: 22px 0 0; }
   }
 
@@ -1633,7 +1637,7 @@
   <div class="footer-inner">
     <p><strong class="footer-company">Nogray's s.r.o.</strong> · Kroftova 10, 150 00 Praha · <a href="tel:+420773226871">+420 773 226 871</a> · <a href="mailto:info@nograys.cz">info@nograys.cz</a></p>
     <p><a href="https://nograys.cz/obchodni-podminky" target="_blank" rel="noopener">Obchodní podmínky</a> · <a href="https://nograys.cz/zasady-ochrany-osobnich-udaju" target="_blank" rel="noopener">Zásady ochrany osobních údajů</a> · <a href="https://nograys.cz/reklamace-a-vraceni-zbozi" target="_blank" rel="noopener">Reklamace a vrácení zboží</a> · <button type="button" id="ng-cc-reopen" class="cc-footlink">Nastavení cookies</button></p>
-    <p class="legal">© 2026 Nogray's s.r.o. · Výsledky se mohou lišit. Přípravek není léčivý přípravek. · <span id="lp-verze">v08</span></p>
+    <p class="legal">© 2026 Nogray's s.r.o. · Výsledky se mohou lišit. Přípravek není léčivý přípravek. · <span id="lp-verze">v09</span></p>
   </div>
 </footer>
 
